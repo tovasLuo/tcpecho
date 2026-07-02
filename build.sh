@@ -5,6 +5,10 @@ cd "$(dirname "$0")"
 
 mkdir -p build
 
+# CGO_ENABLED=0 生成纯静态二进制,不依赖目标机器的 glibc 版本,
+# 避免出现 "GLIBC_2.xx not found" 之类的兼容性问题。
+export CGO_ENABLED=0
+
 echo "building server (linux/amd64) ..."
 GOOS=linux GOARCH=amd64 go build -o build/tcpecho-server-linux-amd64 ./server
 
